@@ -719,6 +719,7 @@ LSM::dvsPair(const double rval)
 }
 
 void
+//LSM::init(const char fname[]) {
 LSM::init(const char fname[], const double f,
           const double b1, const double b2, const double bs,
           const double Aeft, const double Aeft1, const double Aeft2) {
@@ -928,11 +929,12 @@ LSM::printXiStuff(const char fbase[]) {
     ss << fbase << ".xiCLPT_Fr6z05wmap9.txt";
     //std::ofstream fs(ss.str().c_str());
     //std::ofstream fs("xiGRz1planck.txt");
-    std::ofstream fs("xiCLPT_Fr6z05wmap9");
+    std::ofstream fs("xiCLPT_Fr6z05wmap9.txt");
     if (!fs) {std::cerr<<"Unable to open file."<<std::endl;myexit(1);}
     fs << "# Contributions to xi_real."<<std::endl
        << "# Order is r [Mpc/h], xi_L,"
-       << " 1, b1, b2, b1^2, b1.b2, b2^2, Aeft, d2xiLin, bs, b1.bs, b2.bs, bs^2"
+       //<< " 1, b1, b2, b1^2, b1.b2, b2^2, Aeft, d2xiLin, bs, b1.bs, b2.bs, bs^2"
+       << " dark matter, b1, b2, b1^2, b1.b2, b2^2"
        << std::endl;
     for (int ir=0; ir<140; ++ir) {
       //double rr = 10.0 + 2*(ir+0.5);
@@ -941,11 +943,28 @@ LSM::printXiStuff(const char fbase[]) {
       std::vector<double> xC = dvsPair(rr)[0];
       fs<<std::scientific<<std::setw(12)<<std::setprecision(4)<<rr
         <<std::scientific<<std::setw(12)<<std::setprecision(4)<<qf[3];
-      for (int j=0; j<xC.size(); ++j)
+      for (int j=0; j<xC.size()-6; ++j)
         fs<<std::scientific<<std::setw(12)<<std::setprecision(4)<<xC[j];
       fs<<std::endl;
     }
     fs.close();
+
+    for (int ir=0; ir<140; ++ir) {
+      //double rr = 10.0 + 2*(ir+0.5);
+      double rr = 0.0 + 1*(ir+0.5);
+      std::vector<double> qf = interpQfuncs(rr);
+      std::vector<double> xC = dvsPair(rr)[0];
+      std::cout<<std::scientific<<std::setw(12)<<std::setprecision(4)<<rr
+        <<std::scientific<<std::setw(12)<<std::setprecision(4)<<qf[3]
+        <<std::scientific<<std::setw(12)<<std::setprecision(4)<<xC[0]
+        <<std::scientific<<std::setw(12)<<std::setprecision(4)<<xC[1]
+        <<std::scientific<<std::setw(12)<<std::setprecision(4)<<xC[2]
+        <<std::scientific<<std::setw(12)<<std::setprecision(4)<<xC[3]
+        <<std::scientific<<std::setw(12)<<std::setprecision(4)<<xC[4]
+        <<std::scientific<<std::setw(12)<<std::setprecision(4)<<xC[5]
+      <<std::endl;
+      }
+
 }
 
 void
