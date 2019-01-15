@@ -1,7 +1,9 @@
 # Power spectrum code
 
 This repository contains a python code for the calculation of the real-space 
-power spectrum for biased tracers in MG models using Convolution Lagrangian Perturbation Theory (CLPT). 
+power spectrum for biased tracers in MG models using Convolution Lagrangian Perturbation Theory (CLPT), as presented in
+
+G.Valogiannis and R. Bean (2019), https://arxiv.org/abs/1901.03763
 
 The code is the MG version of the one originally presented in https://github.com/martinjameswhite/CLEFT_GSM , for 
 calculating the various ingredients of the Gaussian Streaming Model (GSM) using EFT corrections to CLPT.

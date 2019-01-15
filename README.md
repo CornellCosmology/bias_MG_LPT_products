@@ -1,7 +1,10 @@
 # Bias_MG_LPT_products
 
 This repository contains codes for the calculation of the real-space correlation function 
-and power spectrum for biased tracers in MG models using Convolution Lagrangian Perturbation Theory (CLPT). 
+and power spectrum for biased tracers in MG models using Convolution Lagrangian Perturbation Theory (CLPT), 
+as presented in 
+
+G.Valogiannis and R. Bean (2019), https://arxiv.org/abs/1901.03763
 
 The codes are the MG versions of the ones originally presented in https://github.com/martinjameswhite/CLEFT_GSM , for 
 calculating the various ingredients of the Gaussian Streaming Model (GSM) using EFT corrections to CLPT.
