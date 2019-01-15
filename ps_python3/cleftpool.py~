@@ -233,7 +233,9 @@ def make_table(cl, kmin = 1e-3, kmax = 3, nk = 100, npool = 2, z = 0, M = 0.3):
     '''
 
     header = "k[h/Mpc]   P_Zel   P_A    P_W    P_d    P_dd     P_d^2    P_d^2d^2 \
- P_dd^2    P_s^2    P_ds^2    P_d^2s^2   P_s^2s^2   P_D2d     P_dD2d"
+        P_dd^2"
+    #header = "k[h/Mpc]   P_Zel   P_A    P_W    P_d    P_dd     P_d^2    P_d^2d^2 \
+ #P_dd^2    P_s^2    P_ds^2    P_d^2s^2   P_s^2s^2   P_D2d     P_dD2d"
 
     pktable = numpy.zeros([nk, len(header.split())])
     dg2 = Dgrow(z, M)**2
@@ -265,12 +267,13 @@ def make_table(cl, kmin = 1e-3, kmax = 3, nk = 100, npool = 2, z = 0, M = 0.3):
     pktable[:, 6] = integrate(b2, pool = pool)
     pktable[:, 7] = integrate(b2sq, pool = pool)
     pktable[:, 8] = integrate(b1b2, pool = pool)
-    pktable[:, 9] = integrate(bs2, pool = pool)
-    pktable[:,10] = integrate(b1bs2, pool = pool)
-    pktable[:,11] = integrate(b2bs2, pool = pool)
-    pktable[:,12] = integrate(bs2sq, pool = pool)
-    pktable[:,13] = np.zeros_like(kv)
-    pktable[:,14] = np.zeros_like(kv)
+
+    #pktable[:, 9] = integrate(bs2, pool = pool)
+    #pktable[:,10] = integrate(b1bs2, pool = pool)
+    #pktable[:,11] = integrate(b2bs2, pool = pool)
+    #pktable[:,12] = integrate(bs2sq, pool = pool)
+    #pktable[:,13] = np.zeros_like(kv)
+    #pktable[:,14] = np.zeros_like(kv)
 
     pool.close()
     pool.join()
@@ -296,7 +299,7 @@ def za( k, l):
 def aloop( k, l):
     return  -(Xloop + Yloop - 2*l*Yloop/Ylin/k**2.)  #2*l*Yloop/Ylin/k**2.)  
 
-def wloop( k, l):)
+def wloop( k, l):
     return  bool(l)*(6/5.*xi1loop + 6/5.*xi3loop  -
                     6*(l-1)*xi3loop/(k**2 *Ylin)) *1/(yq *k)
 
