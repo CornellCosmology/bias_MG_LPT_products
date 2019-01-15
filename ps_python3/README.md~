@@ -28,7 +28,7 @@ python3 main.py --pfile plin_Fr6z05wmap9.txt --npool [number of cores] --outfile
 The command saves the CLPT P(k) at plin_Fr6z05wmap9.txt and the necessary Q_n(k) and R_n(k) (not all of them) for C++
 in the files plin_Fr6z05wmap9_cleftQ.txt and plin_Fr6z05wmap9_cleftR.txt.
 
-The above can be adjusted accordingly, in conjunction with changing the MG growth factors in kernelspool, for any desired MG model and z
+The above can be adjusted accordingly, in conjunction with changing the MG growth factors in kernelspool, for any desired MG model and z.
 
 The linear power spectra and growth factors for the rest of the MG models in the paper are also provided.
 

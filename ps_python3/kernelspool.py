@@ -27,10 +27,13 @@ d1growthnDGP=D1growthdatanDGP[:,1]
 #1st order nDGP growth factor interpolation in a. Needed in choose ngrav=2
 d1_nDGP=interp1d(ad1,d1growthnDGP,kind='cubic')
 
+#D2(p.k-p)
 D2growthdata=np.loadtxt("./Dgrowthdata/D2growthFr6z05p80809.txt")
 
+#D2(p,-k)
 D2pkdata=np.loadtxt("./Dgrowthdata/D2pkFr6z05p80809.txt")
 
+#D3_sym(k,-p,p)
 D3symgrowthdata=np.loadtxt("./Dgrowthdata/D3symgrowthFr6z05p80809.txt")
 #D3symgrowthdata=np.loadtxt("./Dgrowthdata/D3symgrowthN1z05p80809.txt")
 
@@ -38,7 +41,7 @@ D2growth=D2growthdata[:]
 D2pk=D2pkdata[:]
 D3symgrowth=D3symgrowthdata[:]
 #
-#trilinear interpolation grid set up
+#trilinear interpolation grid set up for D2 and D3, 80x80x9 points for k, r and x.
 Np=80
 Npx=9
 k=np.logspace(-3,2,Np)
@@ -73,6 +76,7 @@ def Q1(k, r, x): #Because of MG, promote Q(r,x) to Q(k,r,x), added by George
       out_array =  D2growth_interp(flat.T)
       D2att = out_array.reshape(*points[0].shape)
       D2att=D2att[:,0,:]
+      # return f(R) form
       return (r**2)*((7/3)*D2att/(d1_int(k*r)*d1_int(k*numpy.sqrt(y))))**2
     elif ngrav==2:
       D2att=np.empty((r.shape[0],x.shape[1]))
@@ -81,8 +85,10 @@ def Q1(k, r, x): #Because of MG, promote Q(r,x) to Q(k,r,x), added by George
       out_array =  D2growth_interp(flat.T)
       D2att = out_array.reshape(*points[0].shape)
       D2att=D2att[:,0,:]
+      # return nDGP form at z=0.5 (time argument in denominator should change for different z)
       return (r**2)*((7/3)*D2att/(d1_nDGP(0.6667)*d1_nDGP(0.6667)))**2
     else:
+      #GR form
       return (r**2 *(1 - x**2)**2)/y**2
 
 def Q2approx(k, r, x):
@@ -175,7 +181,7 @@ def Qs2(k, r, x):
     return r**2.*(x**2 - 1.)*(1 - 2*r**2 + 4*r*x - 3*x**2)/y**2
 #Extra SPT functions added by George
 
-def QI(k, r, x):
+def QI(k, r, x):# [Q1]MG in the paper.
     y =  1 + r**2 - 2*r*x
     if ngrav==1:
       D2att=np.empty((r.shape[0],x.shape[1]))
@@ -358,7 +364,7 @@ def R2(k, r, x):
     else:
      return ((1- x**2)*r*x*(1 - r*x))/y
 
-def R3(k, r, x):
+def R3(k, r, x):#[R1+R2]_MG in the paper
     y =  1 + r**2 - 2*r*x
     if ngrav==1:
       D2att=np.empty((r.shape[0],x.shape[1]))
@@ -381,7 +387,7 @@ def R3(k, r, x):
 
 
 
-def R4(k, r, x):
+def R4(k, r, x):#[R1]_MG in the paper
     y =  1 + r**2 - 2*r*x
     if ngrav==1:
       D2att=np.empty((r.shape[0],x.shape[1]))
